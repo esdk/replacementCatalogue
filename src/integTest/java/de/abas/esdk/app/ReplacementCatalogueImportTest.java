@@ -37,6 +37,17 @@ public class ReplacementCatalogueImportTest extends EsdkIntegTest {
 		}
 	}
 
+	@Test
+	public void needsExistingImportFile() {
+		replacementCatalogue.setFile("doesNotExist.csv");
+		try {
+			replacementCatalogue.invokeStart();
+			fail("ServerSideErrorMessageException expected due to non-existing file");
+		} catch (ServerSideErrorMessageException e) {
+			assertThat(e.getMessage(), containsString("File does not exist. Please enter a valid import file location."));
+		}
+	}
+
 	@After
 	public void cleanup() {
 		replacementCatalogue.abort();
