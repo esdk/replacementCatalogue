@@ -1,6 +1,7 @@
 package de.abas.esdk.app;
 
 import de.abas.erp.db.infosystem.custom.ow1.ReplacementCatalogue;
+import de.abas.erp.db.schema.userenums.UserEnumSpareImportFileFormat;
 import de.abas.esdk.test.util.EsdkIntegTest;
 import de.abas.esdk.test.util.ServerSideErrorMessageException;
 import org.junit.After;
@@ -21,6 +22,18 @@ public class ReplacementCatalogueImportTest extends EsdkIntegTest {
 			fail("ServerSideErrorMessageException expected due to missing import file location");
 		} catch (ServerSideErrorMessageException e) {
 			assertThat(e.getMessage(), containsString("Please enter the import file location."));
+		}
+	}
+
+	@Test
+	public void needsFormatSpecification() {
+		replacementCatalogue.setFile("doesNotExist");
+		replacementCatalogue.setFormat(UserEnumSpareImportFileFormat.Undefined);
+		try {
+			replacementCatalogue.invokeStart();
+			fail("ServerSideErrorMessageException expected due to missing file format");
+		} catch (ServerSideErrorMessageException e) {
+			assertThat(e.getMessage(), containsString("Please enter the import file format."));
 		}
 	}
 
