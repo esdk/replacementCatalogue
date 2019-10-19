@@ -12,7 +12,7 @@ esdk {
 	app {
 		name = "replacementCatalogue"
 		vendorId = "ag"
-		appId = "replc"
+		appId = ""
 		shared = false
 		infosystems = ["IS.OW1.REPLACEMENTCATALOGUE"]
 		tables = ["Replacement"]
