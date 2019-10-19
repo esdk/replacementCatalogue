@@ -26,6 +26,9 @@ import static org.junit.Assert.fail;
 
 public class ReplacementCatalogueImportTest extends EsdkIntegTest {
 
+	private static final String ICON_ADD = "icon:plus";
+	private static final String ICON_UPDATE = "icon:replace";
+
 	private static Vendor VENDOR;
 	private ReplacementCatalogue replacementCatalogue = ctx.openInfosystem(ReplacementCatalogue.class);
 
@@ -83,16 +86,32 @@ public class ReplacementCatalogueImportTest extends EsdkIntegTest {
 
 	@Test
 	public void canCreateSpareParts() {
-		replacementCatalogue.setFile("ow1/REPLC1.TEST.CSV");
+		importReplacementCatalogue("ow1/REPLC1.TEST.CSV", ICON_ADD);
+		validateSparePart("72645", "Mutter, selbstsichernd", 3.12, "MU34");
+		validateSparePart("92384", "Schraube 60mm, Senkkopf", 5.42, "SCREW");
+		validateSparePart("83474", "Blech, titan", 7.98, "TITAN");
+	}
+
+	@Test
+	public void canUpdateSpareParts() {
+		importReplacementCatalogue("ow1/REPLC1.TEST.CSV", ICON_ADD);
+		importReplacementCatalogue("ow1/REPLC2.TEST.CSV", ICON_UPDATE);
+		validateSparePart("72645", "Mutter, selbstsichernd", 3.12, "MU34");
+		validateSparePart("92384", "Schraube 65mm, Senkkopf", 5.42, "SCREW");
+		validateSparePart("83474", "Blech, Titan", 9.98, "TITAN");
+	}
+
+	private void importReplacementCatalogue(final String file, final String icon) {
+		replacementCatalogue.setFile(file);
 		replacementCatalogue.invokeStart();
 		replacementCatalogue.setVendor(VENDOR);
 		for (final ReplacementCatalogue.Row row : replacementCatalogue.table().getRows()) {
 			row.setImport(true);
 		}
 		replacementCatalogue.invokeStartimport();
-		validateSparePart("72645", "Mutter, selbstsichernd", 3.12, "MU34");
-		validateSparePart("92384", "Schraube 60mm, Senkkopf", 5.42, "SCREW");
-		validateSparePart("83474", "Blech, titan", 7.98, "TITAN");
+		for (final ReplacementCatalogue.Row row : replacementCatalogue.table().getRows()) {
+			assertThat(row.getTransfericon(), is(icon));
+		}
 	}
 
 	@After
