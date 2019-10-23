@@ -1,0 +1,55 @@
+..!interpreter english declaration noabbrev englvar
+..*****************************************************************************
+.. FOP-Name :		SPARE.IMPORT.AFTER.FO
+.. Date : 			Oct 18, 2019
+.. Author : 		jazz
+.. Responsible : 	jazz
+.. Supervisor : 	jazz
+.. Copyright : (c)  2019
+.. Function : 
+..*****************************************************************************
+..<META M|='ow1/REPLACEMENTCATALOGUE' >
+..
+.type bool update
+..
+.continue NVENDOR ? 'M|vendor' = ""
+..
+.select screen line 1
+!NEXT
+.continue SKIP ? 'M|import' = 'G|false'
+.select lock file 'F|formatstr("$,,yvendor=={1};ymatchcode=={2}", M|vendor, M|matchcode)'
+.formula U|update = G|true
+.continue UPDATE ? G|success = G|true
+.make file group0
+..<META H|='P15:0'>
+.formula U|UPDATE = G|false
+.formula H|swd = 'F|formatstr("SPARE{1}", M|vendor^idno)'
+.formula H|descr = M|descr
+.formula H|yvendor = M|vendor
+.formula H|ymatchcode = M|matchcode
+.formula H|ydate = "."
+!UPDATE
+.formula H|yproductno = M|productno
+.formula H|ydescr = M|descr
+.formula H|yprice = M|price
+.formula H|ychanged = "."
+.formula H|ysigned = G|operatorCode
+.formula H|ytransferred = G|true
+.rewrite
+.continue ICON
+!SKIP
+.select screen line
+.continue NEXT ? G|success = G|true
+.continue END
+..
+!NVENDOR
+.error Please specifiy vendor of the replacement catalogue.
+.continue END
+..
+!END
+.end
+
+!ICON
+.formula M|transfericon = "icon:plus" ? U|update = G|false
+.formula M|transfericon = "icon:replace" ? U|update = G|true
+.continue SKIP

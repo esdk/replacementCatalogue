@@ -1,0 +1,30 @@
+..!interpreter english translate noabbrev
+..*****************************************************************************
+.. Name           : FILE.EXIT.FO
+.. Date           : 17.10.19
+.. Version        : 2017r4n16p20
+.. Author         : sa
+.. Functionality  :
+..
+.. Interface (arguments and their meaning)
+..    uses array argument (arg.i)           : no
+..    uses name argument  (xpname=value)    : no
+..
+..    Argument     meaning
+..    -------------------------------------------------------------------------
+..
+.. Program flow   :
+...Includes       :
+..*****************************************************************************
+..
+..<META M|='ow1/REPLACEMENTCATALOGUE' >
+.continue CSV ? 'F|regmatch(M|file, ".*\.(CSV|csv)")' = 'G|true'
+.formula M|format = ""
+.end
+
+!CSV
+.formula M|format = "SPARE_CSV"
+.end
+..
+..*****************************************************************************
+

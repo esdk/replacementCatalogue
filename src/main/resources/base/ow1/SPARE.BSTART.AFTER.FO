@@ -1,0 +1,43 @@
+..!interpreter english declaration noabbrev englvar
+..*****************************************************************************
+.. FOP-Name :		SPARE.BSTART.AFTER.FO
+.. Date : 			Oct 17, 2019
+.. Author : 		jazz
+.. Responsible : 	jazz
+.. Supervisor : 	jazz
+.. Copyright : (c)  2019
+.. Function :
+..*****************************************************************************
+..<META M|='ow1/REPLACEMENTCATALOGUE' >
+.input "is/TABLEEREN"
+..
+.type text productno description matchcode price
+..
+.continue NOFILE ? 'M|file' = ""
+.continue FORMAT ? 'M|format' = ""
+.continue NEXIST ? 'F|fileexists(M|file)' = 'G|false'
+..
+!WHILE
+.select from 'M|file' U|productno ; U|description ; U|matchcode ; U|price^
+.continue END ? G|success = G|false
+.make screen line +o
+.formula M|productno = U|productno
+.formula M|descr = U|description
+.formula M|matchcode = U|matchcode
+.formula M|price = U|price
+.continue WHILE
+
+!NOFILE
+.error Please enter the import file location.
+.continue END
+
+!FORMAT
+.error Please enter the import file format.
+.continue END
+
+!NEXIST
+.error File does not exist. Please enter a valid import file location.
+.continue END
+
+!END
+.end

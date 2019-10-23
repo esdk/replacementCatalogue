@@ -1,0 +1,24 @@
+..!interpreter english translate noabbrev
+..*****************************************************************************
+.. Name           : SPARE.SCREEN.ENTER.FO
+.. Date           : 17.10.19
+.. Version        : 2017r4n16p20
+.. Author         : sa
+.. Functionality  :
+..
+.. Interface (arguments and their meaning)
+..    uses array argument (arg.i)           : no
+..    uses name argument  (xpname=value)    : no
+..
+..    Argument     meaning
+..    -------------------------------------------------------------------------
+..
+.. Program flow   :
+...Includes       :
+..*****************************************************************************
+..
+..<META M|='ow1/REPLACEMENTCATALOGUE' >
+.formula M|format = "SPARE_CSV"
+.end
+..
+..*****************************************************************************
